@@ -28,7 +28,11 @@
 #include<opencv2/core/core.hpp>
 
 #include<System.h>
+<<<<<<< HEAD
 #include<unistd.h>
+=======
+
+>>>>>>> a2c0ba664bd10a9e289002b9a0f95514b8d7e6b7
 using namespace std;
 
 void LoadImages(const string &strPathToSequence, vector<string> &vstrImageLeft,
@@ -56,7 +60,11 @@ int main(int argc, char **argv)
     // Vector for tracking time statistics
     vector<float> vTimesTrack;
     vTimesTrack.resize(nImages);
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> a2c0ba664bd10a9e289002b9a0f95514b8d7e6b7
     cout << endl << "-------" << endl;
     cout << "Start processing sequence ..." << endl;
     cout << "Images in the sequence: " << nImages << endl << endl;   
@@ -77,20 +85,36 @@ int main(int argc, char **argv)
             return 1;
         }
 
+<<<<<<< HEAD
         #ifdef COMPILEDWITHC11
         std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
         #else
         std::chrono::monotonic_clock::time_point t1 = std::chrono::monotonic_clock::now();
         #endif
+=======
+#ifdef COMPILEDWITHC11
+        std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
+#else
+        std::chrono::monotonic_clock::time_point t1 = std::chrono::monotonic_clock::now();
+#endif
+>>>>>>> a2c0ba664bd10a9e289002b9a0f95514b8d7e6b7
 
         // Pass the images to the SLAM system
         SLAM.TrackStereo(imLeft,imRight,tframe);
 
+<<<<<<< HEAD
         #ifdef COMPILEDWITHC11
         std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
         #else
         std::chrono::monotonic_clock::time_point t2 = std::chrono::monotonic_clock::now();
         #endif
+=======
+#ifdef COMPILEDWITHC11
+        std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
+#else
+        std::chrono::monotonic_clock::time_point t2 = std::chrono::monotonic_clock::now();
+#endif
+>>>>>>> a2c0ba664bd10a9e289002b9a0f95514b8d7e6b7
 
         double ttrack= std::chrono::duration_cast<std::chrono::duration<double> >(t2 - t1).count();
 
@@ -109,6 +133,10 @@ int main(int argc, char **argv)
 
     // Stop all threads
     SLAM.Shutdown();
+<<<<<<< HEAD
+=======
+
+>>>>>>> a2c0ba664bd10a9e289002b9a0f95514b8d7e6b7
     // Tracking time statistics
     sort(vTimesTrack.begin(),vTimesTrack.end());
     float totaltime = 0;
@@ -122,6 +150,10 @@ int main(int argc, char **argv)
 
     // Save camera trajectory
     SLAM.SaveTrajectoryKITTI("CameraTrajectory.txt");
+<<<<<<< HEAD
+=======
+
+>>>>>>> a2c0ba664bd10a9e289002b9a0f95514b8d7e6b7
     return 0;
 }
 

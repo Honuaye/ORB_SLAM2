@@ -48,8 +48,11 @@ public:
     
     enum {HARRIS_SCORE=0, FAST_SCORE=1 };
 
+<<<<<<< HEAD
     //nfeatures ORB特征点数量   scaleFactor相邻层的放大倍数  nlevels层数  iniThFAST提取FAST角点时初始阈值   minThFAST提取FAST角点时更小的阈值  
     //设置两个阈值的原因是在FAST提取角点进行分块后有可能在某个块中在原始阈值情况下提取不到角点，使用更小的阈值在进一步提取
+=======
+>>>>>>> a2c0ba664bd10a9e289002b9a0f95514b8d7e6b7
     ORBextractor(int nfeatures, float scaleFactor, int nlevels,
                  int iniThFAST, int minThFAST);
 
@@ -87,15 +90,22 @@ public:
     std::vector<cv::Mat> mvImagePyramid;
 
 protected:
+<<<<<<< HEAD
     // 计算金字塔
     void ComputePyramid(cv::Mat image);
     // 计算关键点并且生成四叉树
     void ComputeKeyPointsOctTree(std::vector<std::vector<cv::KeyPoint> >& allKeypoints); 
     // 为关键点分配四叉树
+=======
+
+    void ComputePyramid(cv::Mat image);
+    void ComputeKeyPointsOctTree(std::vector<std::vector<cv::KeyPoint> >& allKeypoints);    
+>>>>>>> a2c0ba664bd10a9e289002b9a0f95514b8d7e6b7
     std::vector<cv::KeyPoint> DistributeOctTree(const std::vector<cv::KeyPoint>& vToDistributeKeys, const int &minX,
                                            const int &maxX, const int &minY, const int &maxY, const int &nFeatures, const int &level);
 
     void ComputeKeyPointsOld(std::vector<std::vector<cv::KeyPoint> >& allKeypoints);
+<<<<<<< HEAD
     // 存储关键点附件的点对
     std::vector<cv::Point> pattern;
     // 设置最大特征点数
@@ -113,6 +123,21 @@ protected:
     // 每层相对原始图像的缩放比例
     std::vector<float> mvScaleFactor;
     // 每层相对原始图像的缩放比例的倒数
+=======
+    std::vector<cv::Point> pattern;
+
+    int nfeatures;
+    double scaleFactor;
+    int nlevels;
+    int iniThFAST;
+    int minThFAST;
+
+    std::vector<int> mnFeaturesPerLevel;
+
+    std::vector<int> umax;
+
+    std::vector<float> mvScaleFactor;
+>>>>>>> a2c0ba664bd10a9e289002b9a0f95514b8d7e6b7
     std::vector<float> mvInvScaleFactor;    
     std::vector<float> mvLevelSigma2;
     std::vector<float> mvInvLevelSigma2;
