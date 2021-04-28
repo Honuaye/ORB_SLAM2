@@ -1,7 +1,8 @@
 /**
 * This file is part of ORB-SLAM2.
 *
-* Copyright (C) 2014-2016 Raúl Mur-Artal <raulmur at unizar dot es> (University of Zaragoza)
+* Copyright (C) 2014-2016 Raúl Mur-Artal <raulmur at unizar dot es> (University
+* of Zaragoza)
 * For more information see <https://github.com/raulmur/ORB_SLAM2>
 *
 * ORB-SLAM2 is free software: you can redistribute it and/or modify
@@ -25,22 +26,19 @@
 #include "MapPoint.h"
 #include "Map.h"
 
-#include<opencv2/core/core.hpp>
-#include<opencv2/features2d/features2d.hpp>
+#include <opencv2/core/core.hpp>
+#include <opencv2/features2d/features2d.hpp>
 
-#include<mutex>
+#include <mutex>
 
-
-namespace ORB_SLAM2
-{
+namespace ORB_SLAM2 {
 
 class Tracking;
 class Viewer;
 
-class FrameDrawer
-{
-public:
-    FrameDrawer(Map* pMap);
+class FrameDrawer {
+ public:
+    FrameDrawer(Map *pMap);
 
     // Update info from the last processed frame.
     void Update(Tracking *pTracker);
@@ -48,8 +46,7 @@ public:
     // Draw last processed frame.
     cv::Mat DrawFrame();
 
-protected:
-
+ protected:
     void DrawTextInfo(cv::Mat &im, int nState, cv::Mat &imText);
 
     // Info of the frame to be drawn
@@ -63,11 +60,11 @@ protected:
     vector<int> mvIniMatches;
     int mState;
 
-    Map* mpMap;
+    Map *mpMap;
 
     std::mutex mMutex;
 };
 
-} //namespace ORB_SLAM
+}  // namespace ORB_SLAM
 
-#endif // FRAMEDRAWER_H
+#endif  // FRAMEDRAWER_H

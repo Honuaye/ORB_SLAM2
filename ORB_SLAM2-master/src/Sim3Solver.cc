@@ -18,11 +18,8 @@
 * along with ORB-SLAM2. If not, see <http://www.gnu.org/licenses/>.
 */
 
-<<<<<<< HEAD
 #include <unistd.h>
-=======
 
->>>>>>> a2c0ba664bd10a9e289002b9a0f95514b8d7e6b7
 #include "Sim3Solver.h"
 
 #include <vector>

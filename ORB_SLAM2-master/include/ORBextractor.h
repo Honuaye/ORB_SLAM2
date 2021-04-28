@@ -1,7 +1,8 @@
 /**
 * This file is part of ORB-SLAM2.
 *
-* Copyright (C) 2014-2016 Raúl Mur-Artal <raulmur at unizar dot es> (University of Zaragoza)
+* Copyright (C) 2014-2016 Raúl Mur-Artal <raulmur at unizar dot es> (University
+* of Zaragoza)
 * For more information see <https://github.com/raulmur/ORB_SLAM2>
 *
 * ORB-SLAM2 is free software: you can redistribute it and/or modify
@@ -25,16 +26,16 @@
 #include <list>
 #include <opencv/cv.h>
 
+namespace ORB_SLAM2 {
 
-namespace ORB_SLAM2
-{
+class ExtractorNode {
+ public:
+    ExtractorNode() : bNoMore(false) {}
 
-class ExtractorNode
-{
-public:
-    ExtractorNode():bNoMore(false){}
-
-    void DivideNode(ExtractorNode &n1, ExtractorNode &n2, ExtractorNode &n3, ExtractorNode &n4);
+    void DivideNode(ExtractorNode &n1,
+                    ExtractorNode &n2,
+                    ExtractorNode &n3,
+                    ExtractorNode &n4);
 
     std::vector<cv::KeyPoint> vKeys;
     cv::Point2i UL, UR, BL, BR;
@@ -42,69 +43,74 @@ public:
     bool bNoMore;
 };
 
-class ORBextractor
-{
-public:
-    
-    enum {HARRIS_SCORE=0, FAST_SCORE=1 };
+class ORBextractor {
+ public:
+    enum { HARRIS_SCORE = 0, FAST_SCORE = 1 };
 
 <<<<<<< HEAD
-    //nfeatures ORB特征点数量   scaleFactor相邻层的放大倍数  nlevels层数  iniThFAST提取FAST角点时初始阈值   minThFAST提取FAST角点时更小的阈值  
+    // nfeatures ORB特征点数量   scaleFactor相邻层的放大倍数  nlevels层数
+    // iniThFAST提取FAST角点时初始阈值   minThFAST提取FAST角点时更小的阈值
     //设置两个阈值的原因是在FAST提取角点进行分块后有可能在某个块中在原始阈值情况下提取不到角点，使用更小的阈值在进一步提取
 =======
 >>>>>>> a2c0ba664bd10a9e289002b9a0f95514b8d7e6b7
-    ORBextractor(int nfeatures, float scaleFactor, int nlevels,
-                 int iniThFAST, int minThFAST);
+    ORBextractor(int nfeatures,
+                 float scaleFactor,
+                 int nlevels,
+                 int iniThFAST,
+                 int minThFAST);
 
-    ~ORBextractor(){}
+    ~ORBextractor() {}
 
     // Compute the ORB features and descriptors on an image.
     // ORB are dispersed on the image using an octree.
     // Mask is ignored in the current implementation.
-    void operator()( cv::InputArray image, cv::InputArray mask,
-      std::vector<cv::KeyPoint>& keypoints,
-      cv::OutputArray descriptors);
+    void operator()(cv::InputArray image,
+                    cv::InputArray mask,
+                    std::vector<cv::KeyPoint> &keypoints,
+                    cv::OutputArray descriptors);
 
-    int inline GetLevels(){
-        return nlevels;}
+    int inline GetLevels() { return nlevels; }
 
-    float inline GetScaleFactor(){
-        return scaleFactor;}
+    float inline GetScaleFactor() { return scaleFactor; }
 
-    std::vector<float> inline GetScaleFactors(){
-        return mvScaleFactor;
-    }
+    std::vector<float> inline GetScaleFactors() { return mvScaleFactor; }
 
-    std::vector<float> inline GetInverseScaleFactors(){
+    std::vector<float> inline GetInverseScaleFactors() {
         return mvInvScaleFactor;
     }
 
-    std::vector<float> inline GetScaleSigmaSquares(){
-        return mvLevelSigma2;
-    }
+    std::vector<float> inline GetScaleSigmaSquares() { return mvLevelSigma2; }
 
-    std::vector<float> inline GetInverseScaleSigmaSquares(){
+    std::vector<float> inline GetInverseScaleSigmaSquares() {
         return mvInvLevelSigma2;
     }
 
     std::vector<cv::Mat> mvImagePyramid;
 
-protected:
+ protected:
 <<<<<<< HEAD
     // 计算金字塔
     void ComputePyramid(cv::Mat image);
     // 计算关键点并且生成四叉树
-    void ComputeKeyPointsOctTree(std::vector<std::vector<cv::KeyPoint> >& allKeypoints); 
+    void ComputeKeyPointsOctTree(
+        std::vector<std::vector<cv::KeyPoint> > &allKeypoints);
     // 为关键点分配四叉树
 =======
-
     void ComputePyramid(cv::Mat image);
-    void ComputeKeyPointsOctTree(std::vector<std::vector<cv::KeyPoint> >& allKeypoints);    
+    void ComputeKeyPointsOctTree(
+        std::vector<std::vector<cv::KeyPoint> > &allKeypoints);    
 >>>>>>> a2c0ba664bd10a9e289002b9a0f95514b8d7e6b7
-    std::vector<cv::KeyPoint> DistributeOctTree(const std::vector<cv::KeyPoint>& vToDistributeKeys, const int &minX,
-                                           const int &maxX, const int &minY, const int &maxY, const int &nFeatures, const int &level);
+    std::vector<cv::KeyPoint> DistributeOctTree(
+        const std::vector<cv::KeyPoint> &vToDistributeKeys,
+        const int &minX,
+        const int &maxX,
+        const int &minY,
+        const int &maxY,
+        const int &nFeatures,
+        const int &level);
 
-    void ComputeKeyPointsOld(std::vector<std::vector<cv::KeyPoint> >& allKeypoints);
+    void ComputeKeyPointsOld(
+        std::vector<std::vector<cv::KeyPoint> > &allKeypoints);
 <<<<<<< HEAD
     // 存储关键点附件的点对
     std::vector<cv::Point> pattern;
@@ -138,12 +144,11 @@ protected:
 
     std::vector<float> mvScaleFactor;
 >>>>>>> a2c0ba664bd10a9e289002b9a0f95514b8d7e6b7
-    std::vector<float> mvInvScaleFactor;    
+    std::vector<float> mvInvScaleFactor;
     std::vector<float> mvLevelSigma2;
     std::vector<float> mvInvLevelSigma2;
 };
 
-} //namespace ORB_SLAM
+}  // namespace ORB_SLAM
 
 #endif
-

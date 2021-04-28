@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /**
 * This file is part of ORB-SLAM2.
 *
@@ -22,17 +20,13 @@
 
 
 
->>>>>>> a2c0ba664bd10a9e289002b9a0f95514b8d7e6b7
 #include "System.h"
 #include "Converter.h"
 #include <thread>
 #include <pangolin/pangolin.h>
 #include <iomanip>
-<<<<<<< HEAD
 #include <unistd.h>
-=======
 
->>>>>>> a2c0ba664bd10a9e289002b9a0f95514b8d7e6b7
 namespace ORB_SLAM2
 {
 
