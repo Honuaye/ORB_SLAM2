@@ -1,7 +1,8 @@
 /**
 * This file is part of ORB-SLAM2.
 *
-* Copyright (C) 2014-2016 Raúl Mur-Artal <raulmur at unizar dot es> (University of Zaragoza)
+* Copyright (C) 2014-2016 Raúl Mur-Artal <raulmur at unizar dot es> (University
+* of Zaragoza)
 * For more information see <https://github.com/raulmur/ORB_SLAM2>
 *
 * ORB-SLAM2 is free software: you can redistribute it and/or modify
@@ -29,46 +30,40 @@
 #include "Frame.h"
 #include "ORBVocabulary.h"
 
-#include<mutex>
+#include <mutex>
 
-
-namespace ORB_SLAM2
-{
+namespace ORB_SLAM2 {
 
 class KeyFrame;
 class Frame;
 
+class KeyFrameDatabase {
+ public:
+    KeyFrameDatabase(const ORBVocabulary& voc);
 
-class KeyFrameDatabase
-{
-public:
+    void add(KeyFrame* pKF);
 
-    KeyFrameDatabase(const ORBVocabulary &voc);
+    void erase(KeyFrame* pKF);
 
-   void add(KeyFrame* pKF);
+    void clear();
 
-   void erase(KeyFrame* pKF);
+    // Loop Detection
+    std::vector<KeyFrame*> DetectLoopCandidates(KeyFrame* pKF, float minScore);
 
-   void clear();
+    // Relocalization
+    std::vector<KeyFrame*> DetectRelocalizationCandidates(Frame* F);
 
-   // Loop Detection
-   std::vector<KeyFrame *> DetectLoopCandidates(KeyFrame* pKF, float minScore);
+ protected:
+    // Associated vocabulary
+    const ORBVocabulary* mpVoc;
 
-   // Relocalization
-   std::vector<KeyFrame*> DetectRelocalizationCandidates(Frame* F);
+    // Inverted file
+    std::vector<list<KeyFrame*> > mvInvertedFile;
 
-protected:
-
-  // Associated vocabulary
-  const ORBVocabulary* mpVoc;
-
-  // Inverted file
-  std::vector<list<KeyFrame*> > mvInvertedFile;
-
-  // Mutex
-  std::mutex mMutex;
+    // Mutex
+    std::mutex mMutex;
 };
 
-} //namespace ORB_SLAM
+}  // namespace ORB_SLAM
 
 #endif

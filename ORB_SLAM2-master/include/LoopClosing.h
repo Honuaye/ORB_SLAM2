@@ -1,7 +1,8 @@
 /**
 * This file is part of ORB-SLAM2.
 *
-* Copyright (C) 2014-2016 Raúl Mur-Artal <raulmur at unizar dot es> (University of Zaragoza)
+* Copyright (C) 2014-2016 Raúl Mur-Artal <raulmur at unizar dot es> (University
+* of Zaragoza)
 * For more information see <https://github.com/raulmur/ORB_SLAM2>
 *
 * ORB-SLAM2 is free software: you can redistribute it and/or modify
@@ -33,25 +34,27 @@
 #include <mutex>
 #include "Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h"
 
-namespace ORB_SLAM2
-{
+namespace ORB_SLAM2 {
 
 class Tracking;
 class LocalMapping;
 class KeyFrameDatabase;
 
+class LoopClosing {
+ public:
+    typedef pair<set<KeyFrame*>, int> ConsistentGroup;
+    typedef map<
+        KeyFrame*,
+        g2o::Sim3,
+        std::less<KeyFrame*>,
+        Eigen::aligned_allocator<std::pair<const KeyFrame*, g2o::Sim3> > >
+        KeyFrameAndPose;
 
-class LoopClosing
-{
-public:
-
-    typedef pair<set<KeyFrame*>,int> ConsistentGroup;    
-    typedef map<KeyFrame*,g2o::Sim3,std::less<KeyFrame*>,
-        Eigen::aligned_allocator<std::pair<const KeyFrame*, g2o::Sim3> > > KeyFrameAndPose;
-
-public:
-
-    LoopClosing(Map* pMap, KeyFrameDatabase* pDB, ORBVocabulary* pVoc,const bool bFixScale);
+ public:
+    LoopClosing(Map* pMap,
+                KeyFrameDatabase* pDB,
+                ORBVocabulary* pVoc,
+                const bool bFixScale);
 
     void SetTracker(Tracking* pTracker);
 
@@ -60,21 +63,21 @@ public:
     // Main function
     void Run();
 
-    void InsertKeyFrame(KeyFrame *pKF);
+    void InsertKeyFrame(KeyFrame* pKF);
 
     void RequestReset();
 
     // This function will run in a separate thread
     void RunGlobalBundleAdjustment(unsigned long nLoopKF);
 
-    bool isRunningGBA(){
+    bool isRunningGBA() {
         unique_lock<std::mutex> lock(mMutexGBA);
         return mbRunningGBA;
     }
-    bool isFinishedGBA(){
+    bool isFinishedGBA() {
         unique_lock<std::mutex> lock(mMutexGBA);
         return mbFinishedGBA;
-    }   
+    }
 
     void RequestFinish();
 
@@ -82,15 +85,14 @@ public:
 
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-protected:
-
+ protected:
     bool CheckNewKeyFrames();
 
     bool DetectLoop();
 
     bool ComputeSim3();
 
-    void SearchAndFuse(const KeyFrameAndPose &CorrectedPosesMap);
+    void SearchAndFuse(const KeyFrameAndPose& CorrectedPosesMap);
 
     void CorrectLoop();
 
@@ -110,7 +112,7 @@ protected:
     KeyFrameDatabase* mpKeyFrameDB;
     ORBVocabulary* mpORBVocabulary;
 
-    LocalMapping *mpLocalMapper;
+    LocalMapping* mpLocalMapper;
 
     std::list<KeyFrame*> mlpLoopKeyFrameQueue;
 
@@ -142,10 +144,9 @@ protected:
     // Fix scale in the stereo/RGB-D case
     bool mbFixScale;
 
-
     bool mnFullBAIdx;
 };
 
-} //namespace ORB_SLAM
+}  // namespace ORB_SLAM
 
-#endif // LOOPCLOSING_H
+#endif  // LOOPCLOSING_H

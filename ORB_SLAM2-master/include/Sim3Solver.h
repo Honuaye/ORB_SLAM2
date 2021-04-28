@@ -1,7 +1,8 @@
 /**
 * This file is part of ORB-SLAM2.
 *
-* Copyright (C) 2014-2016 Raúl Mur-Artal <raulmur at unizar dot es> (University of Zaragoza)
+* Copyright (C) 2014-2016 Raúl Mur-Artal <raulmur at unizar dot es> (University
+* of Zaragoza)
 * For more information see <https://github.com/raulmur/ORB_SLAM2>
 *
 * ORB-SLAM2 is free software: you can redistribute it and/or modify
@@ -18,7 +19,6 @@
 * along with ORB-SLAM2. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #ifndef SIM3SOLVER_H
 #define SIM3SOLVER_H
 
@@ -27,51 +27,55 @@
 
 #include "KeyFrame.h"
 
+namespace ORB_SLAM2 {
 
+class Sim3Solver {
+ public:
+    Sim3Solver(KeyFrame *pKF1,
+               KeyFrame *pKF2,
+               const std::vector<MapPoint *> &vpMatched12,
+               const bool bFixScale = true);
 
-namespace ORB_SLAM2
-{
-
-class Sim3Solver
-{
-public:
-
-    Sim3Solver(KeyFrame* pKF1, KeyFrame* pKF2, const std::vector<MapPoint*> &vpMatched12, const bool bFixScale = true);
-
-    void SetRansacParameters(double probability = 0.99, int minInliers = 6 , int maxIterations = 300);
+    void SetRansacParameters(double probability = 0.99,
+                             int minInliers = 6,
+                             int maxIterations = 300);
 
     cv::Mat find(std::vector<bool> &vbInliers12, int &nInliers);
 
-    cv::Mat iterate(int nIterations, bool &bNoMore, std::vector<bool> &vbInliers, int &nInliers);
+    cv::Mat iterate(int nIterations,
+                    bool &bNoMore,
+                    std::vector<bool> &vbInliers,
+                    int &nInliers);
 
     cv::Mat GetEstimatedRotation();
     cv::Mat GetEstimatedTranslation();
     float GetEstimatedScale();
 
-
-protected:
-
+ protected:
     void ComputeCentroid(cv::Mat &P, cv::Mat &Pr, cv::Mat &C);
 
     void ComputeSim3(cv::Mat &P1, cv::Mat &P2);
 
     void CheckInliers();
 
-    void Project(const std::vector<cv::Mat> &vP3Dw, std::vector<cv::Mat> &vP2D, cv::Mat Tcw, cv::Mat K);
-    void FromCameraToImage(const std::vector<cv::Mat> &vP3Dc, std::vector<cv::Mat> &vP2D, cv::Mat K);
+    void Project(const std::vector<cv::Mat> &vP3Dw,
+                 std::vector<cv::Mat> &vP2D,
+                 cv::Mat Tcw,
+                 cv::Mat K);
+    void FromCameraToImage(const std::vector<cv::Mat> &vP3Dc,
+                           std::vector<cv::Mat> &vP2D,
+                           cv::Mat K);
 
-
-protected:
-
+ protected:
     // KeyFrames and matches
-    KeyFrame* mpKF1;
-    KeyFrame* mpKF2;
+    KeyFrame *mpKF1;
+    KeyFrame *mpKF2;
 
     std::vector<cv::Mat> mvX3Dc1;
     std::vector<cv::Mat> mvX3Dc2;
-    std::vector<MapPoint*> mvpMapPoints1;
-    std::vector<MapPoint*> mvpMapPoints2;
-    std::vector<MapPoint*> mvpMatches12;
+    std::vector<MapPoint *> mvpMapPoints1;
+    std::vector<MapPoint *> mvpMapPoints2;
+    std::vector<MapPoint *> mvpMatches12;
     std::vector<size_t> mvnIndices1;
     std::vector<size_t> mvSigmaSquare1;
     std::vector<size_t> mvSigmaSquare2;
@@ -125,9 +129,8 @@ protected:
     // Calibration
     cv::Mat mK1;
     cv::Mat mK2;
-
 };
 
-} //namespace ORB_SLAM
+}  // namespace ORB_SLAM
 
-#endif // SIM3SOLVER_H
+#endif  // SIM3SOLVER_H

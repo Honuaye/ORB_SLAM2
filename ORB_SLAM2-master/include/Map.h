@@ -1,7 +1,8 @@
 /**
 * This file is part of ORB-SLAM2.
 *
-* Copyright (C) 2014-2016 Raúl Mur-Artal <raulmur at unizar dot es> (University of Zaragoza)
+* Copyright (C) 2014-2016 Raúl Mur-Artal <raulmur at unizar dot es> (University
+* of Zaragoza)
 * For more information see <https://github.com/raulmur/ORB_SLAM2>
 *
 * ORB-SLAM2 is free software: you can redistribute it and/or modify
@@ -27,24 +28,20 @@
 
 #include <mutex>
 
-
-
-namespace ORB_SLAM2
-{
+namespace ORB_SLAM2 {
 
 class MapPoint;
 class KeyFrame;
 
-class Map
-{
-public:
+class Map {
+ public:
     Map();
 
     void AddKeyFrame(KeyFrame* pKF);
     void AddMapPoint(MapPoint* pMP);
     void EraseMapPoint(MapPoint* pMP);
     void EraseKeyFrame(KeyFrame* pKF);
-    void SetReferenceMapPoints(const std::vector<MapPoint*> &vpMPs);
+    void SetReferenceMapPoints(const std::vector<MapPoint*>& vpMPs);
     void InformNewBigChange();
     int GetLastBigChangeIdx();
 
@@ -53,7 +50,7 @@ public:
     std::vector<MapPoint*> GetReferenceMapPoints();
 
     long unsigned int MapPointsInMap();
-    long unsigned  KeyFramesInMap();
+    long unsigned KeyFramesInMap();
 
     long unsigned int GetMaxKFid();
 
@@ -63,10 +60,11 @@ public:
 
     std::mutex mMutexMapUpdate;
 
-    // This avoid that two points are created simultaneously in separate threads (id conflict)
+    // This avoid that two points are created simultaneously in separate threads
+    // (id conflict)
     std::mutex mMutexPointCreation;
 
-protected:
+ protected:
     std::set<MapPoint*> mspMapPoints;
     std::set<KeyFrame*> mspKeyFrames;
 
@@ -80,6 +78,6 @@ protected:
     std::mutex mMutexMap;
 };
 
-} //namespace ORB_SLAM
+}  // namespace ORB_SLAM
 
-#endif // MAP_H
+#endif  // MAP_H
